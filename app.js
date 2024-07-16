@@ -7,6 +7,7 @@ var cookieParser = require('cookie-parser');
 var lessMiddleware = require('less-middleware');
 var logger = require('morgan');
 var brand = require('./brand');
+var cors = require('cors');
 
 var MysqlDriver = require('quick.db').MySQLDriver;
 var Quickdb = require('quick.db').QuickDB;
@@ -44,6 +45,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(lessMiddleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(cors());
 
 app.use('/', indexRouter);
 app.use('/v1', apiRouter);

@@ -19,7 +19,27 @@ router.get('/create', async function(req, res, next) {
     req.query.url
   );
 
-  res.render('done', { title: 'Done', id, appname: req.app.locals.brand.appName, creator: req.app.locals.brand.appCreator });
+  if (!req.query.encoding) {
+    res.render('done', { title: 'Done', id, appname: req.app.locals.brand.appName, creator: req.app.locals.brand.appCreator });
+  } else {
+    switch (req.query.encoding) {
+      case "text":
+        return res.send(id);
+      case "json":
+        return res.json({ id });
+      case "xml":
+        res.header('Content-Type', 'application/xml');
+        return res.send(`
+<dumolink>
+      <id>${id}</id>
+</dumolink>
+        `);
+    }
+  }
+});
+
+router.get('/link', async function (req, res, next) {
+	
 });
 
 module.exports = router;
