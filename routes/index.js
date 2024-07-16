@@ -4,7 +4,7 @@ var createError = require('http-errors');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Home' });
+  res.render('index', { title: 'Home', appname: req.app.locals.brand.appName, creator: req.app.locals.brand.appCreator });
 });
 
 /* redirect to a url from the id. */

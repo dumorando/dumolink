@@ -6,6 +6,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var lessMiddleware = require('less-middleware');
 var logger = require('morgan');
+var brand = require('./brand');
 
 var MysqlDriver = require('quick.db').MySQLDriver;
 var Quickdb = require('quick.db').QuickDB;
@@ -30,6 +31,8 @@ var indexRouter = require('./routes/index');
 var apiRouter = require('./routes/api');
 
 var app = express();
+
+app.locals.brand = brand;
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -58,7 +61,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error', { title: 'Error' });
+  res.render('error', { title: 'Error', appname: req.app.locals.brand.appName, creator: req.app.locals.brand.appCreator });
 });
 
 module.exports = app;

@@ -19,7 +19,7 @@ router.get('/create', async function(req, res, next) {
     req.query.url
   );
 
-  res.render('done', { title: 'Done', id });
+  res.render('done', { title: 'Done', id, appname: req.app.locals.brand.appName, creator: req.app.locals.brand.appCreator });
 });
 
 module.exports = router;
