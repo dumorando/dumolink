@@ -39,7 +39,30 @@ router.get('/create', async function(req, res, next) {
 });
 
 router.get('/link', async function (req, res, next) {
-	
+  if (!req.query.id || !req.query.encoding) return next(createError(400));
+
+  /**
+   * @type {import("quick.db").QuickDB}
+   */
+  var db = req.app.locals.db;
+
+  if (!await db.has(req.query.id)) return next(createError(404));
+
+  var url = await db.get(req.query.id);
+
+  switch (req.query.encoding) {
+    case "text":
+      return res.send(url);
+    case "json":
+      return res.json({ url });
+    case "xml":
+      res.header('Content-Type', 'application/xml');
+      return res.send(`
+<dumolink>
+    <url>${url}</url>
+</dumolink>
+      `);
+  }
 });
 
 module.exports = router;
