@@ -15,7 +15,7 @@ router.get('/:id', async function(req, res, next) {
   var db = req.app.locals.db;
 
   if (!await db.has(req.params.id)) {
-    next(createError(404));
+    return next(createError(404));
   }
 
   res.redirect(await db.get(req.params.id));
