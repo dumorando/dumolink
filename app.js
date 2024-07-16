@@ -1,9 +1,27 @@
+require('dotenv').config();
+
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var lessMiddleware = require('less-middleware');
 var logger = require('morgan');
+
+var MysqlDriver = require('quick.db').MySQLDriver;
+var Quickdb = require('quick.db').QuickDB;
+
+var {DB_HOST, DB_USER, DB_PASSWORD, DB_DATABASE} = process.env;
+
+var db;
+
+var driver = new MysqlDriver({
+  host: DB_HOST,
+  user: DB_USER,
+  password: DB_PASSWORD,
+  database: DB_DATABASE
+});
+
+driver.connect().then(() => db = new Quickdb({ driver }));
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
