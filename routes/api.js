@@ -6,7 +6,7 @@ var router = express.Router();
 /* route creation.
    TODO: make this a post. */
 router.get('/create', async function(req, res, next) {
-  if (!req.query.url) next(createError(400));
+  if (!req.query.url) return next(createError(400));
 
   /**
    * @type {import("quick.db").QuickDB}
