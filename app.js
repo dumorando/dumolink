@@ -21,7 +21,10 @@ var driver = new MysqlDriver({
   database: DB_DATABASE
 });
 
-driver.connect().then(() => db = new Quickdb({ driver }));
+driver.connect().then(() => {
+  db = new Quickdb({ driver }); 
+  app.locals.db = db;
+});
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
