@@ -24,7 +24,7 @@ router.get('/create', async function(req, res, next) {
   } else {
     switch (req.query.encoding) {
       case "text":
-        return res.send(id);
+        return res.header("Content-Type", 'text/plain').send(id);
       case "json":
         return res.json({ id });
       case "xml":
@@ -52,7 +52,7 @@ router.get('/link', async function (req, res, next) {
 
   switch (req.query.encoding) {
     case "text":
-      return res.send(url);
+      return res.header("Content-Type", 'text/plain').send(url);
     case "json":
       return res.json({ url });
     case "xml":
